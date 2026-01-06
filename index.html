@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#E74C3C">
-    <title>Aisha Shayari - Admin Panel</title>
+    <meta name="theme-color" content="#00BCD4">
+    <title>Manage Your Shayari Collection</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- ✅ GOOGLE FONTS FOR UNICODE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+Symbols:wght@400&family=Noto+Sans+Symbols+2:wght@400&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -16,346 +20,83 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        *:focus {
-            outline: none !important;
-        }
-
-        :root {
-            --primary: #E74C3C;
-            --primary-dark: #C0392B;
-            --success: #2ECC71;
-            --warning: #F39C12;
-            --danger: #E74C3C;
-            --dark: #2C3E50;
-        }
-
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Noto Sans', 'Noto Sans JP', 'Noto Sans Symbols', 'Noto Sans Symbols 2', 'Noto Color Emoji', -apple-system, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 15px;
             padding-bottom: 80px;
         }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .admin-container {
+        .container {
             max-width: 1200px;
             margin: 0 auto;
-            animation: fadeIn 0.5s ease;
         }
 
-        .admin-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        .header {
+            background: linear-gradient(135deg, #00BCD4, #0097A7);
             padding: 20px;
             border-radius: 20px;
             margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: slideDown 0.5s ease;
         }
 
-        .admin-header h1 {
+        .header h1 {
             color: white;
             font-size: 24px;
             font-weight: 900;
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 8px;
+            gap: 10px;
         }
 
-        .admin-header h1 i {
-            animation: pulse 2s infinite;
-        }
-
-        .admin-header p {
+        .header p {
             color: rgba(255,255,255,0.9);
             font-size: 13px;
             font-weight: 600;
         }
 
-        /* API Key Settings Card */
-        .api-settings-card {
-            background: linear-gradient(135deg, #FFF3CD, #FFE8A1);
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            border: 2px solid #FFC107;
-            animation: slideUp 0.4s ease;
-        }
-
-        .api-settings-card h2 {
-            color: #856404;
-            font-size: 18px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .api-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
+        /* ✅ API KEY SETTINGS */
+        .api-settings {
             background: white;
-            border-radius: 12px;
-            margin-bottom: 12px;
-        }
-
-        .api-status i {
-            font-size: 20px;
-            color: var(--success);
-        }
-
-        .api-status.error i {
-            color: var(--danger);
-        }
-
-        .api-status div h4 {
-            color: var(--dark);
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-
-        .api-status div p {
-            color: #7F8C8D;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .author-profile-card {
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            animation: slideUp 0.5s ease;
-        }
-
-        .author-profile-card h2 {
-            color: var(--dark);
-            font-size: 18px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .author-preview-box {
-            display: flex;
-            align-items: center;
-            gap: 15px;
             padding: 15px;
-            background: linear-gradient(135deg, #f8f9fa, #ffffff);
             border-radius: 15px;
             margin-bottom: 15px;
-            border: 2px solid #E0E0E0;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
         }
 
-        .author-preview-box img {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary);
-        }
-
-        .author-preview-info h3 {
-            color: var(--dark);
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 3px;
-        }
-
-        .author-preview-info p {
-            color: #7F8C8D;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        .form-group {
-            position: relative;
-        }
-
-        .form-group label {
-            display: block;
-            color: var(--dark);
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px 15px;
-            background: white;
-            border: 2px solid #E0E0E0;
-            border-radius: 12px;
-            font-size: 13px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            color: var(--dark);
-        }
-
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-            line-height: 1.6;
-            font-weight: 500;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
-        }
-
-        .image-upload-box {
-            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            border: 2px dashed var(--success);
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .image-upload-box:hover {
-            background: linear-gradient(135deg, #C8E6C9, #A5D6A7);
-            border-color: #27AE60;
-        }
-
-        .image-upload-box i {
-            font-size: 35px;
-            color: var(--success);
+        .api-settings h3 {
+            color: #2C3E50;
+            font-size: 14px;
+            font-weight: 800;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .image-upload-box h4 {
-            color: var(--dark);
-            font-size: 14px;
-            font-weight: 800;
-            margin-bottom: 5px;
-        }
-
-        .image-upload-box p {
-            color: #7F8C8D;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .image-upload-box input[type="file"] {
-            display: none;
-        }
-
-        .upload-preview {
-            margin-top: 10px;
-            padding: 10px;
-            background: white;
+        .api-settings input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #E0E0E0;
             border-radius: 10px;
-            display: none;
+            font-size: 13px;
+            font-weight: 500;
+            background: #F8F9FA;
         }
 
-        .upload-preview img {
-            width: 100%;
-            max-height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 8px;
+        .api-settings input:focus {
+            border-color: #00BCD4;
+            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1);
+            outline: none;
         }
 
-        .upload-status {
+        .api-settings .hint {
+            margin-top: 8px;
             font-size: 11px;
-            font-weight: 700;
-            color: var(--success);
-            margin-top: 5px;
-        }
-
-        .upload-status.error {
-            color: var(--danger);
-        }
-
-        .btn-save-profile {
-            width: 100%;
-            background: linear-gradient(135deg, var(--success), #27AE60);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 800;
-            cursor: pointer;
-            margin-top: 12px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
-        }
-
-        .btn-save-profile:active {
-            transform: scale(0.98);
-        }
-
-        .btn-save-api {
-            width: 100%;
-            background: linear-gradient(135deg, var(--warning), #E67E22);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 800;
-            cursor: pointer;
-            margin-top: 12px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
-        }
-
-        .btn-save-api:active {
-            transform: scale(0.98);
+            color: #7F8C8D;
+            font-weight: 600;
         }
 
         .stats-grid {
@@ -370,7 +111,6 @@
             padding: 18px;
             border-radius: 15px;
             box-shadow: 0 3px 15px rgba(0,0,0,0.1);
-            animation: slideUp 0.6s ease;
         }
 
         .stat-card h3 {
@@ -379,11 +119,10 @@
             font-weight: 700;
             margin-bottom: 8px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .stat-card .stat-value {
-            color: var(--dark);
+            color: #2C3E50;
             font-size: 26px;
             font-weight: 900;
             display: flex;
@@ -393,56 +132,326 @@
 
         .stat-card .stat-value i {
             font-size: 22px;
-            color: var(--primary);
+            color: #00BCD4;
         }
 
-        .shayari-form-card {
+        .api-status {
+            background: linear-gradient(135deg, #4CAF50, #388E3C);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .api-status i {
+            font-size: 18px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #FFF3CD, #FFE8A1);
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #FFC107;
+        }
+
+        .info-box p {
+            color: #856404;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card {
             background: white;
             padding: 20px;
             border-radius: 20px;
             margin-bottom: 20px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            animation: slideUp 0.7s ease;
         }
 
-        .shayari-form-card h2 {
-            color: var(--dark);
+        .card h2 {
+            color: #2C3E50;
             font-size: 18px;
             font-weight: 800;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: 10px;
         }
 
-        .form-title {
+        .author-preview {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border: 2px solid #E0E0E0;
         }
 
-        .btn-cancel-edit {
-            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 10px;
+        .author-preview img {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #00BCD4;
+        }
+
+        .author-preview-info h3 {
+            color: #2C3E50;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .author-preview-info p {
+            color: #7F8C8D;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #2C3E50;
             font-size: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-weight: 700;
+            margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .btn-cancel-edit:active {
-            transform: scale(0.95);
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: white;
+            border: 2px solid #E0E0E0;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: #2C3E50;
         }
 
-        .btn-submit {
+        .form-group textarea {
             width: 100%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 15px;
+            background: white;
+            border: 2px solid #E0E0E0;
+            border-radius: 12px;
+            font-size: 17px !important;
+            min-height: 130px;
+            resize: vertical;
+            line-height: 1.8;
+            transition: all 0.3s ease;
+            color: #2C3E50;
+            font-family: 'Noto Sans', 'Noto Sans JP', 'Noto Sans Symbols', 'Noto Sans Symbols 2', 'Noto Color Emoji', sans-serif !important;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #00BCD4;
+            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1);
+            outline: none;
+        }
+
+        .upload-box {
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px dashed #4CAF50;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+        }
+
+        .upload-box:hover {
+            background: linear-gradient(135deg, #C8E6C9, #A5D6A7);
+            border-color: #388E3C;
+        }
+
+        .upload-box i {
+            font-size: 40px;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .upload-box h4 {
+            color: #2C3E50;
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .upload-box p {
+            color: #7F8C8D;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .upload-box input[type="file"] {
+            display: none;
+        }
+
+        .image-preview {
+            margin-top: 12px;
+            padding: 12px;
+            background: white;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .image-preview img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .image-preview .status {
+            font-size: 11px;
+            font-weight: 700;
+            color: #4CAF50;
+        }
+
+        .image-preview .status.error {
+            color: #E74C3C;
+        }
+
+        /* ✅ IMAGE GALLERY FROM FIREBASE */
+        .image-gallery {
+            background: linear-gradient(135deg, #F3E5F5, #E1BEE7);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid #9C27B0;
+            display: none;
+        }
+
+        .image-gallery.show {
+            display: block;
+        }
+
+        .image-gallery h4 {
+            color: #4A148C;
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item.selected {
+            border-color: #9C27B0;
+            box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-item .check-icon {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #9C27B0;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .gallery-item.selected .check-icon {
+            display: flex;
+        }
+
+        /* ✅ MANUAL URL INPUT */
+        .manual-url-box {
+            background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 10px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .manual-url-box label {
+            display: block;
+            color: #1565C0;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .manual-url-box input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #90CAF9;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            background: white;
+        }
+
+        .manual-url-box input:focus {
+            border-color: #2196F3;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+            outline: none;
+        }
+
+        .btn-save {
+            width: 100%;
+            background: linear-gradient(135deg, #00BCD4, #0097A7);
             color: white;
             border: none;
             padding: 15px;
@@ -453,35 +462,104 @@
             margin-top: 15px;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .btn-submit:active {
+        .btn-save:active {
             transform: scale(0.98);
         }
 
-        .btn-submit.update {
-            background: linear-gradient(135deg, var(--warning), #E67E22);
-        }
-
-        .shayari-list-card {
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            animation: slideUp 0.8s ease;
-            margin-bottom: 20px;
-        }
-
-        .shayari-list-card h2 {
-            color: var(--dark);
-            font-size: 18px;
-            font-weight: 800;
-            margin-bottom: 15px;
+        .btn-publish {
+            width: 100%;
+            background: linear-gradient(135deg, #E74C3C, #C0392B);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 900;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
+        }
+
+        .btn-publish:active {
+            transform: scale(0.98);
+        }
+
+        /* ✅ UPDATE BUTTON FOR EDIT MODE */
+        .btn-update {
+            width: 100%;
+            background: linear-gradient(135deg, #F39C12, #E67E22);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 900;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-update.show {
+            display: flex;
+        }
+
+        .btn-update:active {
+            transform: scale(0.98);
+        }
+
+        /* ✅ CANCEL EDIT BUTTON */
+        .btn-cancel {
+            width: 100%;
+            background: linear-gradient(135deg, #95A5A6, #7F8C8D);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 900;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-cancel.show {
+            display: flex;
+        }
+
+        .btn-cancel:active {
+            transform: scale(0.98);
+        }
+
+        .shayari-list {
+            margin-top: 20px;
         }
 
         .shayari-item {
@@ -494,8 +572,7 @@
         }
 
         .shayari-item:hover {
-            border-color: var(--primary);
-            transform: translateX(3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .shayari-item-header {
@@ -505,34 +582,34 @@
             margin-bottom: 10px;
         }
 
-        .author-info-small {
+        .author-small {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .author-info-small img {
+        .author-small img {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--primary);
+            border: 2px solid #00BCD4;
         }
 
-        .author-info-small div h4 {
-            color: var(--dark);
+        .author-small div h4 {
+            color: #2C3E50;
             font-size: 13px;
             font-weight: 700;
             margin-bottom: 2px;
         }
 
-        .author-info-small div p {
+        .author-small div p {
             color: #7F8C8D;
             font-size: 10px;
             font-weight: 600;
         }
 
-        .action-buttons {
+        .action-btns {
             display: flex;
             gap: 8px;
         }
@@ -553,11 +630,11 @@
         }
 
         .btn-edit {
-            background: linear-gradient(135deg, var(--warning), #E67E22);
+            background: linear-gradient(135deg, #F39C12, #E67E22);
         }
 
         .btn-delete {
-            background: linear-gradient(135deg, var(--danger), #C0392B);
+            background: linear-gradient(135deg, #E74C3C, #C0392B);
         }
 
         .btn-edit:active,
@@ -574,11 +651,14 @@
         }
 
         .shayari-item-text {
-            color: var(--dark);
-            font-size: 13px;
+            color: #2C3E50;
+            font-size: 14px;
             font-weight: 500;
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: 10px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Noto Sans', 'Noto Sans JP', 'Noto Sans Symbols', 'Noto Sans Symbols 2', 'Noto Color Emoji', sans-serif;
         }
 
         .shayari-item-tags {
@@ -587,15 +667,14 @@
             flex-wrap: wrap;
         }
 
-        .tag-badge {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        .tag {
+            background: linear-gradient(135deg, #00BCD4, #0097A7);
             color: white;
             padding: 4px 10px;
             border-radius: 12px;
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
         }
 
         .toast {
@@ -603,7 +682,7 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%) translateY(-100px);
-            background: linear-gradient(135deg, var(--success), #27AE60);
+            background: linear-gradient(135deg, #4CAF50, #388E3C);
             color: white;
             padding: 12px 25px;
             border-radius: 25px;
@@ -613,7 +692,6 @@
             opacity: 0;
             transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            letter-spacing: 0.5px;
         }
 
         .toast.show {
@@ -622,10 +700,10 @@
         }
 
         .toast.error {
-            background: linear-gradient(135deg, var(--danger), #C0392B);
+            background: linear-gradient(135deg, #E74C3C, #C0392B);
         }
 
-        .loading-overlay {
+        .loading {
             display: none;
             position: fixed;
             top: 0;
@@ -638,7 +716,7 @@
             align-items: center;
         }
 
-        .loading-overlay.show {
+        .loading.show {
             display: flex;
         }
 
@@ -647,17 +725,21 @@
             padding: 30px;
             border-radius: 20px;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
 
         .loading-content i {
             font-size: 40px;
-            color: var(--primary);
+            color: #00BCD4;
             animation: spin 1s linear infinite;
         }
 
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         .loading-content p {
-            color: var(--dark);
+            color: #2C3E50;
             font-weight: 700;
             margin-top: 15px;
             font-size: 14px;
@@ -665,155 +747,63 @@
 
         .empty-state {
             text-align: center;
-            padding: 35px 20px;
+            padding: 40px 20px;
         }
 
         .empty-state i {
-            font-size: 45px;
+            font-size: 50px;
             color: #E0E0E0;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .empty-state p {
             color: #7F8C8D;
             font-weight: 600;
-            font-size: 13px;
-        }
-
-        .edit-author-section {
-            background: linear-gradient(135deg, #FFF3CD, #FFE8A1);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 2px solid #FFC107;
-        }
-
-        .edit-author-section h3 {
-            color: #856404;
             font-size: 14px;
+        }
+
+        /* ✅ EDIT MODE INDICATOR */
+        .edit-mode-badge {
+            background: linear-gradient(135deg, #F39C12, #E67E22);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 800;
-            margin-bottom: 10px;
-            display: flex;
+            display: none;
             align-items: center;
             gap: 8px;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
         }
 
-        .edit-author-preview {
+        .edit-mode-badge.show {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            background: white;
-            border-radius: 10px;
-            margin-bottom: 10px;
         }
-
-        .edit-author-preview img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--warning);
-        }
-
-        .edit-author-preview div h4 {
-            color: var(--dark);
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-
-        .edit-author-preview div p {
-            color: #856404;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
     </style>
 </head>
 <body>
 
-    <div class="admin-container">
-        <div class="admin-header">
-            <h1><i class="fas fa-crown"></i> ADMIN PANEL</h1>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-feather-alt"></i> Shayari Admin Panel</h1>
             <p>Manage Your Shayari Collection</p>
         </div>
 
-        <!-- API Key Settings Card -->
-        <div class="api-settings-card">
-            <h2><i class="fas fa-key"></i> API Key Settings</h2>
-            
-            <div class="api-status" id="apiStatus">
-                <i class="fas fa-check-circle"></i>
-                <div>
-                    <h4>API Key Status</h4>
-                    <p id="apiStatusText">Active & Working</p>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label><i class="fas fa-code"></i> ImgBB API Key *</label>
-                <input type="text" id="apiKeyInput" placeholder="Enter your ImgBB API Key" value="62543f3d93367d5ca526dca327e8fda5">
-                <p style="font-size: 11px; color: #7F8C8D; margin-top: 5px; font-weight: 600;">
-                    <i class="fas fa-info-circle"></i> Get your free API key from <a href="https://api.imgbb.com/" target="_blank" style="color: var(--primary); text-decoration: none;">imgbb.com</a>
-                </p>
-            </div>
-
-            <button class="btn-save-api" onclick="saveApiKey()">
-                <i class="fas fa-save"></i> Save API Key
-            </button>
+        <!-- ✅ API KEY SETTINGS -->
+        <div class="api-settings">
+            <h3><i class="fas fa-key"></i> IMGBB API KEY</h3>
+            <input type="text" id="imgbbApiKey" value="9d0dc3093c6e1c78f89fd149ceaf2688" placeholder="Enter your ImgBB API key">
+            <p class="hint"><i class="fas fa-info-circle"></i> Get free API key from imgbb.com/api</p>
         </div>
 
-        <!-- Author Profile Section -->
-        <div class="author-profile-card">
-            <h2><i class="fas fa-user-circle"></i> Default Author Profile</h2>
-            <div class="author-preview-box">
-                <img src="https://ui-avatars.com/api/?name=Author&background=E74C3C&color=fff&size=100" alt="Author" id="previewImg">
-                <div class="author-preview-info">
-                    <h3 id="previewName">Your Name</h3>
-                    <p>Default Profile</p>
-                </div>
-            </div>
-            
-            <div class="form-grid">
-                <div class="form-group">
-                    <label><i class="fas fa-signature"></i> Author Name *</label>
-                    <input type="text" id="authorName" placeholder="Enter your name">
-                </div>
-
-                <div class="form-group">
-                    <label><i class="fas fa-camera"></i> Profile Picture</label>
-                    <div class="image-upload-box" onclick="document.getElementById('profilePhotoInput').click()">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <h4>Upload Profile Photo</h4>
-                        <p>Click to choose from gallery</p>
-                        <input type="file" id="profilePhotoInput" accept="image/*" onchange="uploadProfilePhoto(event)">
-                        <div class="upload-preview" id="profilePreview">
-                            <img src="" alt="Preview" id="profilePreviewImg">
-                            <p class="upload-status" id="profileStatus">Uploading...</p>
-                        </div>
-                    </div>
-                    <input type="text" id="authorPhoto" placeholder="Photo URL (auto-generated)" readonly style="background: #f5f5f5;">
-                </div>
-            </div>
-            
-            <button class="btn-save-profile" onclick="saveAuthorProfile()">
-                <i class="fas fa-save"></i> Save Profile
-            </button>
-        </div>
-
-        <!-- Statistics -->
+        <!-- Stats -->
         <div class="stats-grid">
             <div class="stat-card">
                 <h3>Total Shayari</h3>
                 <div class="stat-value">
-                    <i class="fas fa-feather-alt"></i>
+                    <i class="fas fa-book"></i>
                     <span id="totalShayari">0</span>
                 </div>
             </div>
@@ -826,113 +816,150 @@
             </div>
         </div>
 
-        <!-- Add/Edit Shayari Form -->
-        <div class="shayari-form-card">
-            <h2>
-                <div class="form-title">
-                    <i class="fas fa-pen-fancy"></i>
-                    <span id="formTitle">Add New Shayari</span>
-                </div>
-                <button class="btn-cancel-edit" id="cancelEditBtn" style="display: none;" onclick="cancelEdit()">
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-            </h2>
-            
-            <input type="hidden" id="editingId" value="">
-            
-            <!-- Edit Author Section -->
-            <div class="edit-author-section" id="editAuthorSection" style="display: none;">
-                <h3><i class="fas fa-user-edit"></i> Edit Author Details</h3>
-                
-                <div class="edit-author-preview">
-                    <img src="https://ui-avatars.com/api/?name=Author&background=F39C12&color=fff&size=100" alt="Author" id="editPreviewImg">
-                    <div>
-                        <h4 id="editPreviewName">Author</h4>
-                        <p>Current Author</p>
-                    </div>
-                </div>
+        <!-- API Status -->
+        <div class="api-status">
+            <i class="fas fa-check-circle"></i>
+            <span>Active & Working</span>
+        </div>
 
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label><i class="fas fa-signature"></i> Author Name</label>
-                        <input type="text" id="editAuthorName" placeholder="Change author name">
+        <!-- Info Box -->
+        <div class="info-box">
+            <p>
+                <i class="fas fa-info-circle"></i>
+                Select category to see previous images
+            </p>
+        </div>
+
+        <!-- Author Profile Card -->
+        <div class="card">
+            <h2><i class="fas fa-user-circle"></i> Default Author Profile</h2>
+            <div class="author-preview">
+                <img src="https://ui-avatars.com/api/?name=Author&background=00BCD4&color=fff&size=100" alt="Author" id="previewImg">
+                <div class="author-preview-info">
+                    <h3 id="previewName">Your Name</h3>
+                    <p>Default Profile</p>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label><i class="fas fa-signature"></i> Author Name *</label>
+                <input type="text" id="authorName" placeholder="Enter your name">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-camera"></i> Profile Picture</label>
+                <div class="upload-box" onclick="document.getElementById('profilePhotoInput').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h4>Upload Profile Photo</h4>
+                    <p>Click to choose from gallery</p>
+                    <input type="file" id="profilePhotoInput" accept="image/*" onchange="uploadProfilePhoto(event)">
+                    <div class="image-preview" id="profilePreview">
+                        <img src="" alt="Preview" id="profilePreviewImg">
+                        <p class="status" id="profileStatus">Uploading...</p>
                     </div>
-                    
-                    <div class="form-group">
-                        <label><i class="fas fa-camera"></i> Author Photo</label>
-                        <div class="image-upload-box" onclick="document.getElementById('editProfilePhotoInput').click()">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <h4>Change Photo</h4>
-                            <p>Click to choose</p>
-                            <input type="file" id="editProfilePhotoInput" accept="image/*" onchange="uploadEditProfilePhoto(event)">
-                        </div>
-                        <input type="text" id="editAuthorPhoto" placeholder="Photo URL" readonly style="background: #f5f5f5;">
-                    </div>
+                </div>
+                <input type="text" id="authorPhoto" placeholder="Photo URL (auto-generated)" readonly style="background: #f5f5f5; margin-top: 10px;">
+            </div>
+            
+            <button class="btn-save" onclick="saveAuthorProfile()">
+                <i class="fas fa-save"></i> Save Profile
+            </button>
+        </div>
+
+        <!-- Add/Edit Shayari Card -->
+        <div class="card" id="shayariForm">
+            <h2><i class="fas fa-pen-fancy"></i> <span id="formTitle">Add New Shayari</span></h2>
+            
+            <!-- ✅ EDIT MODE INDICATOR -->
+            <div class="edit-mode-badge" id="editModeBadge">
+                <i class="fas fa-edit"></i>
+                <span>EDIT MODE - Updating Shayari</span>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-quote-left"></i> ♡♡ SHAYARI TEXT *</label>
+                <textarea id="shayariText" placeholder="Write your shayari with symbols... ♡゚---------- ✨"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-tags"></i> ♨ CATEGORY *</label>
+                <select id="category" onchange="loadCategoryImages()">
+                    <option value="">Choose Category</option>
+                    <option value="Love">Love</option>
+                    <option value="Sad">Sad</option>
+                    <option value="Attitude">Attitude</option>
+                    <option value="Friendship">Friendship</option>
+                    <option value="Motivational">Motivational</option>
+                </select>
+            </div>
+
+            <!-- ✅ IMAGE GALLERY FROM FIREBASE -->
+            <div class="image-gallery" id="imageGallery">
+                <h4><i class="fas fa-images"></i> Choose from Previous Images (<span id="imageCount">0</span> available)</h4>
+                <div class="gallery-grid" id="galleryGrid">
+                    <!-- Images will be loaded here -->
                 </div>
             </div>
 
             <div class="form-group">
-                <label><i class="fas fa-quote-left"></i> Shayari Text *</label>
-                <textarea id="shayariText" placeholder="Write your shayari..."></textarea>
+                <label><i class="fas fa-language"></i> 🅰 LANGUAGE *</label>
+                <select id="language">
+                    <option value="">Select Language</option>
+                    <option value="English">English</option>
+                    <option value="Hindi">Hindi</option>
+                </select>
             </div>
 
-            <div class="form-grid">
-                <div class="form-group">
-                    <label><i class="fas fa-tags"></i> Category *</label>
-                    <select id="category">
-                        <option value="">Choose Category</option>
-                        <option value="Love">Love</option>
-                        <option value="Sad">Sad</option>
-                        <option value="Attitude">Attitude</option>
-                        <option value="Friendship">Friendship</option>
-                        <option value="Motivational">Motivational</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label><i class="fas fa-heart"></i> MOOD *</label>
+                <select id="mood">
+                    <option value="Romantic">Romantic</option>
+                    <option value="Melancholic">Melancholic</option>
+                    <option value="Inspirational">Inspirational</option>
+                    <option value="Joyful">Joyful</option>
+                    <option value="Reflective">Reflective</option>
+                    <option value="Passionate">Passionate</option>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label><i class="fas fa-language"></i> Language *</label>
-                    <select id="language">
-                        <option value="">Select Language</option>
-                        <option value="English">English</option>
-                        <option value="Hindi">Hindi</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label><i class="fas fa-heart"></i> Mood *</label>
-                    <select id="mood">
-                        <option value="Romantic">Romantic</option>
-                        <option value="Melancholic">Melancholic</option>
-                        <option value="Inspirational">Inspirational</option>
-                        <option value="Joyful">Joyful</option>
-                        <option value="Reflective">Reflective</option>
-                        <option value="Passionate">Passionate</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label><i class="fas fa-image"></i> Shayari Image</label>
-                    <div class="image-upload-box" onclick="document.getElementById('shayariImageInput').click()">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <h4>Upload Image</h4>
-                        <p>Click to choose</p>
-                        <input type="file" id="shayariImageInput" accept="image/*" onchange="uploadShayariImage(event)">
-                        <div class="upload-preview" id="shayariPreview">
-                            <img src="" alt="Preview" id="shayariPreviewImg">
-                            <p class="upload-status" id="shayariStatus">Uploading...</p>
-                        </div>
+            <div class="form-group">
+                <label><i class="fas fa-image"></i> SHAYARI IMAGE</label>
+                
+                <!-- Upload Box -->
+                <div class="upload-box" onclick="document.getElementById('shayariImageInput').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h4>Upload Image</h4>
+                    <p>Click to choose</p>
+                    <input type="file" id="shayariImageInput" accept="image/*" onchange="uploadShayariImage(event)">
+                    <div class="image-preview" id="shayariPreview">
+                        <img src="" alt="Preview" id="shayariPreviewImg">
+                        <p class="status" id="shayariStatus">Uploading...</p>
                     </div>
-                    <input type="text" id="imageUrl" placeholder="Image URL (auto-generated)" readonly style="background: #f5f5f5;">
+                </div>
+
+                <!-- ✅ MANUAL URL INPUT -->
+                <div class="manual-url-box">
+                    <label><i class="fas fa-link"></i> Or Paste Image URL Manually</label>
+                    <input type="text" id="imageUrl" placeholder="https://example.com/image.jpg" oninput="previewManualUrl()">
                 </div>
             </div>
 
-            <button class="btn-submit" id="submitBtn" onclick="submitShayari()">
-                <i class="fas fa-paper-plane"></i> Publish Shayari
+            <!-- ✅ PUBLISH / UPDATE BUTTONS -->
+            <button class="btn-publish" id="publishBtn" onclick="publishShayari()">
+                <i class="fas fa-paper-plane"></i> PUBLISH SHAYARI
+            </button>
+
+            <button class="btn-update" id="updateBtn" onclick="updateShayari()">
+                <i class="fas fa-save"></i> UPDATE SHAYARI
+            </button>
+
+            <button class="btn-cancel" id="cancelBtn" onclick="cancelEdit()">
+                <i class="fas fa-times"></i> CANCEL EDIT
             </button>
         </div>
 
         <!-- Published Shayari List -->
-        <div class="shayari-list-card">
+        <div class="card">
             <h2><i class="fas fa-list"></i> Published Shayari</h2>
             <div id="shayariListContainer">
                 <div class="empty-state">
@@ -945,10 +972,10 @@
 
     <div class="toast" id="toast"></div>
     
-    <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading" id="loading">
         <div class="loading-content">
             <i class="fas fa-circle-notch"></i>
-            <p id="loadingText">Uploading...</p>
+            <p id="loadingText">Loading...</p>
         </div>
     </div>
 
@@ -970,66 +997,84 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // ✅ LOAD API KEY FROM LOCALSTORAGE
-        let IMGBB_API_KEY = localStorage.getItem('imgbbApiKey') || '62543f3d93367d5ca526dca327e8fda5';
+        // ✅ EDIT MODE VARIABLES
+        let editMode = false;
+        let currentEditId = null;
 
-        window.onload = function() {
-            loadApiKey();
-            autoLoadAuthorFromFirebase();
-            loadAllShayari();
-            updateStats();
-        };
-
-        // ✅ LOAD AND DISPLAY API KEY
-        function loadApiKey() {
-            const savedKey = localStorage.getItem('imgbbApiKey');
-            if (savedKey) {
-                IMGBB_API_KEY = savedKey;
-                document.getElementById('apiKeyInput').value = savedKey;
-                updateApiStatus(true, 'API Key Loaded');
-            } else {
-                document.getElementById('apiKeyInput').value = IMGBB_API_KEY;
-            }
-        }
-
-        // ✅ SAVE API KEY
-        function saveApiKey() {
-            const apiKey = document.getElementById('apiKeyInput').value.trim();
-            
-            if (!apiKey) {
-                showToast('⚠️ Please enter API Key!', true);
+        // ✅ LOAD CATEGORY IMAGES FROM FIREBASE
+        function loadCategoryImages() {
+            const category = document.getElementById('category').value;
+            if (!category) {
+                document.getElementById('imageGallery').classList.remove('show');
                 return;
             }
 
-            if (apiKey.length < 20) {
-                showToast('⚠️ Invalid API Key format!', true);
-                return;
-            }
+            showLoading('Loading category images...');
 
-            localStorage.setItem('imgbbApiKey', apiKey);
-            IMGBB_API_KEY = apiKey;
-            
-            updateApiStatus(true, 'API Key Saved Successfully!');
-            showToast('✅ API Key saved! Ready to upload images.');
+            // ✅ FETCH ALL SHAYARI OF THIS CATEGORY
+            database.ref('shayari').orderByChild('category').equalTo(category).once('value', (snapshot) => {
+                const data = snapshot.val();
+                const galleryGrid = document.getElementById('galleryGrid');
+                const imageGallery = document.getElementById('imageGallery');
+
+                if (!data) {
+                    imageGallery.classList.remove('show');
+                    hideLoading();
+                    return;
+                }
+
+                // ✅ COLLECT UNIQUE IMAGES
+                const uniqueImages = new Set();
+                Object.values(data).forEach(item => {
+                    if (item.imageUrl && item.imageUrl.trim()) {
+                        uniqueImages.add(item.imageUrl);
+                    }
+                });
+
+                if (uniqueImages.size === 0) {
+                    imageGallery.classList.remove('show');
+                    hideLoading();
+                    return;
+                }
+
+                // ✅ DISPLAY IMAGES
+                document.getElementById('imageCount').textContent = uniqueImages.size;
+                galleryGrid.innerHTML = '';
+                
+                uniqueImages.forEach(url => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.innerHTML = `
+                        <img src="${url}" alt="Image">
+                        <div class="check-icon"><i class="fas fa-check"></i></div>
+                    `;
+                    
+                    item.addEventListener('click', () => {
+                        // Remove previous selection
+                        document.querySelectorAll('.gallery-item').forEach(el => el.classList.remove('selected'));
+                        // Select this item
+                        item.classList.add('selected');
+                        // Set URL
+                        document.getElementById('imageUrl').value = url;
+                        document.getElementById('shayariPreviewImg').src = url;
+                        document.getElementById('shayariPreview').style.display = 'block';
+                        document.getElementById('shayariStatus').textContent = '✓ Image selected!';
+                        document.getElementById('shayariStatus').classList.remove('error');
+                        showToast('✅ Image selected!');
+                    });
+                    
+                    galleryGrid.appendChild(item);
+                });
+
+                imageGallery.classList.add('show');
+                hideLoading();
+            }).catch((error) => {
+                hideLoading();
+                console.error('Error loading category images:', error);
+            });
         }
 
-        // ✅ UPDATE API STATUS DISPLAY
-        function updateApiStatus(isActive, message) {
-            const statusDiv = document.getElementById('apiStatus');
-            const statusText = document.getElementById('apiStatusText');
-            
-            if (isActive) {
-                statusDiv.classList.remove('error');
-                statusDiv.querySelector('i').className = 'fas fa-check-circle';
-            } else {
-                statusDiv.classList.add('error');
-                statusDiv.querySelector('i').className = 'fas fa-exclamation-circle';
-            }
-            
-            statusText.textContent = message;
-        }
-
-        // ✅ IMPROVED UPLOAD FUNCTION - FULL SIZE IMAGE
+        // ✅ UPLOAD IMAGE TO IMGBB
         async function uploadToImgBB(file, statusId, previewId, urlFieldId) {
             return new Promise((resolve, reject) => {
                 if (!file.type.startsWith('image/')) {
@@ -1042,7 +1087,12 @@
                     return;
                 }
 
-                // Show preview
+                const apiKey = document.getElementById('imgbbApiKey').value.trim();
+                if (!apiKey) {
+                    reject('Please enter ImgBB API key!');
+                    return;
+                }
+
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const preview = document.getElementById(previewId);
@@ -1052,22 +1102,21 @@
                         if (img) img.src = e.target.result;
                         const status = document.getElementById(statusId);
                         if (status) {
-                            status.textContent = 'Uploading full size...';
+                            status.textContent = 'Uploading...';
                             status.classList.remove('error');
                         }
                     }
                 };
                 reader.readAsDataURL(file);
 
-                // Convert to base64 and upload
                 const reader2 = new FileReader();
                 reader2.onloadend = async function() {
                     try {
                         const base64String = reader2.result.split(',')[1];
-                        showLoading('Uploading full size image...');
+                        showLoading('Uploading image...');
 
                         const formData = new FormData();
-                        formData.append('key', IMGBB_API_KEY);
+                        formData.append('key', apiKey);
                         formData.append('image', base64String);
 
                         const response = await fetch('https://api.imgbb.com/1/upload', {
@@ -1078,20 +1127,17 @@
                         const data = await response.json();
 
                         if (data.success) {
-                            // ✅ USE FULL SIZE ORIGINAL IMAGE URL
-                            const imageUrl = data.data.image.url; // Full size image
-                            
+                            const imageUrl = data.data.image.url;
                             document.getElementById(urlFieldId).value = imageUrl;
                             
                             const status = document.getElementById(statusId);
                             if (status) {
-                                status.textContent = '✓ Full size uploaded!';
+                                status.textContent = '✓ Uploaded!';
                                 status.classList.remove('error');
                             }
 
-                            updateApiStatus(true, 'API Working - Upload Success');
                             hideLoading();
-                            showToast('✅ Full size image uploaded!');
+                            showToast('✅ Image uploaded!');
                             resolve(imageUrl);
                         } else {
                             throw new Error(data.error?.message || 'Upload failed');
@@ -1103,10 +1149,8 @@
                             status.textContent = '✗ Upload failed!';
                             status.classList.add('error');
                         }
-                        
-                        updateApiStatus(false, 'Upload Failed - Check API Key');
                         hideLoading();
-                        showToast('❌ Upload failed! Check API Key.', true);
+                        showToast('❌ Upload failed!', true);
                         reject(error);
                     }
                 };
@@ -1114,7 +1158,6 @@
             });
         }
 
-        // Profile photo upload
         async function uploadProfilePhoto(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1128,50 +1171,6 @@
             }
         }
 
-        // Edit profile photo upload
-        async function uploadEditProfilePhoto(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            try {
-                showLoading('Uploading full size...');
-                const reader = new FileReader();
-                
-                reader.onloadend = async function() {
-                    try {
-                        const base64 = reader.result.split(',')[1];
-                        const formData = new FormData();
-                        formData.append('key', IMGBB_API_KEY);
-                        formData.append('image', base64);
-
-                        const response = await fetch('https://api.imgbb.com/1/upload', {
-                            method: 'POST',
-                            body: formData
-                        });
-
-                        const data = await response.json();
-
-                        if (data.success) {
-                            const url = data.data.image.url; // Full size
-                            document.getElementById('editAuthorPhoto').value = url;
-                            document.getElementById('editPreviewImg').src = url;
-                            hideLoading();
-                            showToast('✅ Full size photo uploaded!');
-                        } else {
-                            throw new Error('Upload failed');
-                        }
-                    } catch (error) {
-                        hideLoading();
-                        showToast('❌ Upload failed! Check API Key.', true);
-                    }
-                };
-                reader.readAsDataURL(file);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        // Shayari image upload
         async function uploadShayariImage(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1183,46 +1182,36 @@
             }
         }
 
-        function autoLoadAuthorFromFirebase() {
+        // ✅ PREVIEW MANUAL URL
+        function previewManualUrl() {
+            const url = document.getElementById('imageUrl').value.trim();
+            if (url) {
+                document.getElementById('shayariPreviewImg').src = url;
+                document.getElementById('shayariPreview').style.display = 'block';
+                document.getElementById('shayariStatus').textContent = '✓ Manual URL loaded!';
+                document.getElementById('shayariStatus').classList.remove('error');
+            } else {
+                document.getElementById('shayariPreview').style.display = 'none';
+            }
+        }
+
+        function loadAuthorProfile() {
             const savedName = localStorage.getItem('authorName');
             const savedPhoto = localStorage.getItem('authorPhoto');
             
             if (savedName) {
-                updateAuthorPreview(savedName, savedPhoto);
-            } else {
-                database.ref('shayari').orderByChild('timestamp').limitToLast(1).once('value', (snapshot) => {
-                    const data = snapshot.val();
-                    if (data) {
-                        const firstPost = Object.values(data)[0];
-                        const authorName = firstPost.authorName || 'Your Name';
-                        const authorPhoto = firstPost.authorPhoto || '';
-                        
-                        updateAuthorPreview(authorName, authorPhoto);
-                        localStorage.setItem('authorName', authorName);
-                        if (authorPhoto) localStorage.setItem('authorPhoto', authorPhoto);
-                    }
-                });
+                document.getElementById('authorName').value = savedName;
+                document.getElementById('previewName').textContent = savedName;
             }
-        }
-
-        function updateAuthorPreview(name, photo) {
-            document.getElementById('authorName').value = name;
-            document.getElementById('previewName').textContent = name;
             
-            if (photo) {
-                document.getElementById('authorPhoto').value = photo;
-                document.getElementById('previewImg').src = photo;
-            } else {
-                document.getElementById('previewImg').src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name) + '&background=E74C3C&color=fff&size=100';
+            if (savedPhoto) {
+                document.getElementById('authorPhoto').value = savedPhoto;
+                document.getElementById('previewImg').src = savedPhoto;
             }
         }
 
         document.getElementById('authorName').addEventListener('input', function(e) {
             document.getElementById('previewName').textContent = e.target.value || 'Your Name';
-        });
-
-        document.getElementById('editAuthorName').addEventListener('input', function(e) {
-            document.getElementById('editPreviewName').textContent = e.target.value || 'Author';
         });
 
         function saveAuthorProfile() {
@@ -1239,12 +1228,7 @@
             showToast('✅ Profile saved!');
         }
 
-        function submitShayari() {
-            const editingId = document.getElementById('editingId').value;
-            editingId ? updateShayari(editingId) : addShayari();
-        }
-
-        function addShayari() {
+        function publishShayari() {
             const text = document.getElementById('shayariText').value.trim();
             const category = document.getElementById('category').value;
             const language = document.getElementById('language').value;
@@ -1261,11 +1245,17 @@
             showLoading('Publishing...');
 
             database.ref('shayari').push({
-                text, category, language, mood, authorName, authorPhoto, imageUrl,
+                text: text,
+                category: category,
+                language: language,
+                mood: mood,
+                authorName: authorName,
+                authorPhoto: authorPhoto,
+                imageUrl: imageUrl,
                 timestamp: Date.now()
             }).then(() => {
                 hideLoading();
-                showToast('✅ Published!');
+                showToast('✅ Published successfully!');
                 clearForm();
                 updateStats();
             }).catch((error) => {
@@ -1274,94 +1264,136 @@
             });
         }
 
+        // ✅ EDIT SHAYARI
         function editShayari(id) {
-            showLoading('Loading...');
+            showLoading('Loading shayari...');
             
             database.ref('shayari/' + id).once('value', (snapshot) => {
                 const data = snapshot.val();
+                
                 if (!data) {
                     hideLoading();
-                    showToast('❌ Not found!', true);
+                    showToast('❌ Shayari not found!', true);
                     return;
                 }
 
-                document.getElementById('editingId').value = id;
+                // ✅ SET EDIT MODE
+                editMode = true;
+                currentEditId = id;
+
+                // ✅ FILL FORM WITH DATA
                 document.getElementById('shayariText').value = data.text;
                 document.getElementById('category').value = data.category;
                 document.getElementById('language').value = data.language;
                 document.getElementById('mood').value = data.mood;
                 document.getElementById('imageUrl').value = data.imageUrl || '';
-                
+
                 if (data.imageUrl) {
                     document.getElementById('shayariPreviewImg').src = data.imageUrl;
                     document.getElementById('shayariPreview').style.display = 'block';
-                }
-                
-                document.getElementById('editAuthorName').value = data.authorName || 'Anonymous';
-                document.getElementById('editAuthorPhoto').value = data.authorPhoto || '';
-                document.getElementById('editPreviewName').textContent = data.authorName || 'Anonymous';
-                
-                if (data.authorPhoto) {
-                    document.getElementById('editPreviewImg').src = data.authorPhoto;
-                } else {
-                    document.getElementById('editPreviewImg').src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.authorName || 'Author') + '&background=F39C12&color=fff&size=100';
+                    document.getElementById('shayariStatus').textContent = '✓ Current image';
                 }
 
-                document.getElementById('editAuthorSection').style.display = 'block';
+                // ✅ LOAD CATEGORY IMAGES
+                loadCategoryImages();
+
+                // ✅ SHOW EDIT MODE UI
                 document.getElementById('formTitle').textContent = 'Edit Shayari';
-                document.getElementById('cancelEditBtn').style.display = 'block';
-                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save"></i> Update';
-                document.getElementById('submitBtn').classList.add('update');
+                document.getElementById('editModeBadge').classList.add('show');
+                document.getElementById('publishBtn').style.display = 'none';
+                document.getElementById('updateBtn').classList.add('show');
+                document.getElementById('cancelBtn').classList.add('show');
+
+                // ✅ SCROLL TO FORM
+                document.getElementById('shayariForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
                 hideLoading();
-                document.querySelector('.shayari-form-card').scrollIntoView({ behavior: 'smooth' });
-                showToast('✏️ Edit mode!');
+                showToast('✏️ Edit mode activated!');
+            }).catch((error) => {
+                hideLoading();
+                showToast('❌ Error loading shayari!', true);
+                console.error(error);
             });
         }
 
-        function updateShayari(id) {
+        // ✅ UPDATE SHAYARI
+        function updateShayari() {
+            if (!editMode || !currentEditId) {
+                showToast('❌ Not in edit mode!', true);
+                return;
+            }
+
             const text = document.getElementById('shayariText').value.trim();
             const category = document.getElementById('category').value;
             const language = document.getElementById('language').value;
             const mood = document.getElementById('mood').value;
             const imageUrl = document.getElementById('imageUrl').value.trim();
-            const authorName = document.getElementById('editAuthorName').value.trim();
-            const authorPhoto = document.getElementById('editAuthorPhoto').value.trim();
+            const authorName = localStorage.getItem('authorName') || 'Anonymous';
+            const authorPhoto = localStorage.getItem('authorPhoto') || '';
 
-            if (!text || !category || !language || !authorName) {
+            if (!text || !category || !language) {
                 showToast('⚠️ Fill all required fields!', true);
                 return;
             }
 
             showLoading('Updating...');
 
-            database.ref('shayari/' + id).once('value', (snapshot) => {
-                const oldData = snapshot.val();
-                
-                database.ref('shayari/' + id).set({
-                    text, category, language, mood, authorName, authorPhoto, imageUrl,
-                    timestamp: oldData.timestamp
-                }).then(() => {
-                    hideLoading();
-                    showToast('✅ Updated!');
-                    cancelEdit();
-                    updateStats();
-                }).catch((error) => {
-                    hideLoading();
-                    showToast('❌ Error: ' + error.message, true);
-                });
+            database.ref('shayari/' + currentEditId).update({
+                text: text,
+                category: category,
+                language: language,
+                mood: mood,
+                authorName: authorName,
+                authorPhoto: authorPhoto,
+                imageUrl: imageUrl,
+                updatedAt: Date.now()
+            }).then(() => {
+                hideLoading();
+                showToast('✅ Updated successfully!');
+                cancelEdit();
+                updateStats();
+            }).catch((error) => {
+                hideLoading();
+                showToast('❌ Error: ' + error.message, true);
             });
         }
 
+        // ✅ CANCEL EDIT
         function cancelEdit() {
-            document.getElementById('editingId').value = '';
-            document.getElementById('editAuthorSection').style.display = 'none';
-            document.getElementById('shayariPreview').style.display = 'none';
+            editMode = false;
+            currentEditId = null;
+
+            // ✅ RESET FORM
             clearForm();
+
+            // ✅ HIDE EDIT MODE UI
             document.getElementById('formTitle').textContent = 'Add New Shayari';
-            document.getElementById('cancelEditBtn').style.display = 'none';
-            document.getElementById('submitBtn').innerHTML = '<i class="fas fa-paper-plane"></i> Publish';
-            document.getElementById('submitBtn').classList.remove('update');
+            document.getElementById('editModeBadge').classList.remove('show');
+            document.getElementById('publishBtn').style.display = 'flex';
+            document.getElementById('updateBtn').classList.remove('show');
+            document.getElementById('cancelBtn').classList.remove('show');
+
+            showToast('↩️ Edit cancelled');
+        }
+
+        // ✅ DELETE SHAYARI
+        function deleteShayari(id) {
+            if (!confirm('⚠️ Are you sure you want to delete this shayari? This action cannot be undone!')) {
+                return;
+            }
+
+            showLoading('Deleting...');
+            
+            database.ref('shayari/' + id).remove()
+                .then(() => {
+                    hideLoading();
+                    showToast('✅ Deleted successfully!');
+                    updateStats();
+                })
+                .catch((error) => {
+                    hideLoading();
+                    showToast('❌ Error: ' + error.message, true);
+                });
         }
 
         function loadAllShayari() {
@@ -1377,51 +1409,35 @@
                 const shayariArray = Object.entries(data).map(([id, item]) => ({ id, ...item })).sort((a, b) => b.timestamp - a.timestamp);
 
                 container.innerHTML = shayariArray.map(item => {
-                    const authorImg = item.authorPhoto || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(item.authorName || 'Author') + '&background=E74C3C&color=fff&size=100';
+                    const authorImg = item.authorPhoto || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(item.authorName || 'Author') + '&background=00BCD4&color=fff&size=100';
                     const imageHtml = item.imageUrl ? `<img src="${item.imageUrl}" class="shayari-item-image" alt="Shayari">` : '';
                     
                     return `
                         <div class="shayari-item">
                             <div class="shayari-item-header">
-                                <div class="author-info-small">
+                                <div class="author-small">
                                     <img src="${authorImg}" alt="${escapeHtml(item.authorName)}">
                                     <div>
                                         <h4>${escapeHtml(item.authorName)}</h4>
                                         <p>${timeAgo(item.timestamp)}</p>
                                     </div>
                                 </div>
-                                <div class="action-buttons">
-                                    <button class="btn-edit" onclick="editShayari('${item.id}')"><i class="fas fa-edit"></i></button>
-                                    <button class="btn-delete" onclick="deleteShayari('${item.id}')"><i class="fas fa-trash"></i></button>
+                                <div class="action-btns">
+                                    <button class="btn-edit" onclick="editShayari('${item.id}')" title="Edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-delete" onclick="deleteShayari('${item.id}')" title="Delete"><i class="fas fa-trash"></i></button>
                                 </div>
                             </div>
                             ${imageHtml}
                             <div class="shayari-item-text">${escapeHtml(item.text)}</div>
                             <div class="shayari-item-tags">
-                                <span class="tag-badge">${item.category}</span>
-                                <span class="tag-badge">${item.language}</span>
-                                <span class="tag-badge">${item.mood}</span>
+                                <span class="tag">${item.category}</span>
+                                <span class="tag">${item.language}</span>
+                                <span class="tag">${item.mood}</span>
                             </div>
                         </div>
                     `;
                 }).join('');
             });
-        }
-
-        function deleteShayari(id) {
-            if (!confirm('Delete this shayari?')) return;
-
-            showLoading('Deleting...');
-            database.ref('shayari/' + id).remove()
-                .then(() => {
-                    hideLoading();
-                    showToast('✅ Deleted!');
-                    updateStats();
-                })
-                .catch((error) => {
-                    hideLoading();
-                    showToast('❌ Error!', true);
-                });
         }
 
         function updateStats() {
@@ -1447,6 +1463,8 @@
             document.getElementById('language').value = '';
             document.getElementById('mood').value = 'Romantic';
             document.getElementById('imageUrl').value = '';
+            document.getElementById('shayariPreview').style.display = 'none';
+            document.getElementById('imageGallery').classList.remove('show');
         }
 
         function showToast(message, isError = false) {
@@ -1459,11 +1477,11 @@
 
         function showLoading(text = 'Loading...') {
             document.getElementById('loadingText').textContent = text;
-            document.getElementById('loadingOverlay').classList.add('show');
+            document.getElementById('loading').classList.add('show');
         }
 
         function hideLoading() {
-            document.getElementById('loadingOverlay').classList.remove('show');
+            document.getElementById('loading').classList.remove('show');
         }
 
         function escapeHtml(text) {
@@ -1479,6 +1497,12 @@
             if (seconds < 2592000) return Math.floor(seconds / 86400) + ' day ago';
             return new Date(timestamp).toLocaleDateString();
         }
+
+        window.onload = function() {
+            loadAuthorProfile();
+            loadAllShayari();
+            updateStats();
+        };
     </script>
 
 </body>
